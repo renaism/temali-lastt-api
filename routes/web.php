@@ -17,3 +17,4 @@ $router->get('/', function () use ($router) {
 
 
 $router->get('options', 'OptionController@getAll');
+$router->post('result', 'OptionController@getResult');
