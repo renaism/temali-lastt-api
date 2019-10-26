@@ -6,14 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Option extends Model
 {
-
+    public $incrementing = false;
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'label', 'result', 'exp_pos', 'exp_neg'
+        'id', 'label', 'result', 'exp_pos', 'exp_neg'
     ];
 
     public function getAll()
