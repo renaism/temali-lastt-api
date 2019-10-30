@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Option;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\PDF;
 
 class OptionController extends Controller
 {
@@ -19,10 +20,16 @@ class OptionController extends Controller
 
     public function getResult(Request $request)
     {
-        try {
-            return response()->json($this->option->getResult($request->selectedOptions));
-        } catch (\Throwable $th) {
-           error_log($th);
-        }
+        return response()->json($this->option->getResult($request->selectedOptions));
+    }
+
+    public function getResultPDF(Request $request)
+    {
+        //$result = $this->option->getResultPDF($request->selectedOptions);
+        $pdf = app()->make('dompdf.wrapper');
+        $data = [];
+        $pdf->setPaper('A4', 'portrait');
+        $pdf->loadView('result', $data);
+        return $pdf->download('test.pdf');
     }
 }

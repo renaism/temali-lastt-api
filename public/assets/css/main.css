@@ -1,0 +1,52 @@
+.page {
+    height: 29.7cm;
+    width: 21cm;
+    max-height: 29.7cm;
+    max-width: 21cm;
+}
+
+.page .row {
+    height: 100%;
+    width: 100%;
+}
+
+.side {
+    background-color: #19708B;
+    color: white;
+    padding: 1.5cm;
+}
+
+.side .title {
+    margin-top: 12cm;
+    font-size: 1.2cm;
+}
+
+.side .name {
+    margin-top: 0.5cm;
+    font-size: 2cm;
+    line-height: 2cm;
+}
+
+.content {
+    padding: 1.2cm;
+}
+
+.content .title {
+    margin-top: 2cm;
+    font-size: 1.2cm;
+}
+
+.result {
+    margin-top: 1.5cm;
+}
+
+.result .label {
+    font-size: 0.5cm;
+    font-weight: bold;
+}
+
+.result .explanation {
+    font-size: 0.36cm;
+    white-space: pre-line;
+    text-align: justify;
+}
