@@ -28,7 +28,7 @@ class OptionController extends Controller
         //$result = $this->option->getResultPDF($request->selectedOptions);
         $pdf = app()->make('dompdf.wrapper');
         $data = [];
-        $pdf->setPaper('A4', 'portrait');
+        $pdf->setPaper('A3', 'landscape');
         $pdf->loadView('result', $data);
         return $pdf->download('test.pdf');
     }
