@@ -19,7 +19,5 @@ $router->get('/', function () use ($router) {
 $router->get('options', 'OptionController@getAll');
 $router->post('result', 'OptionController@getResult');
 $router->post('result/pdf', 'OptionController@getResultPDF');
-$router->get('resultPDF', 'OptionController@getResultPDF');
-$router->get('test', function() {
-    return view('result');
-});
+$router->get('testPDF-31459', 'OptionController@testPDF');
+$router->get('test-31459', 'OptionController@test');

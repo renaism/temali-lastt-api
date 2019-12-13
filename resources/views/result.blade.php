@@ -6,6 +6,20 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 </head>
 <style>
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  src: url({{ storage_path('fonts/custom/Montserrat-Regular.ttf') }}) format('truetype');
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 700;
+  src: url({{ storage_path('fonts/custom/Montserrat-Bold.ttf') }}) format('truetype');
+}
+
 * {
     box-sizing: border-box;
     padding: 0;
@@ -13,80 +27,124 @@
 }
 
 .page {
-    height: 29.7cm;
     width: 21cm;
-    max-height: 29.7cm;
     max-width: 21cm;
+    font-family: "Montserrat", Sans-serif;
 }
 
-.side {
+.intro-line {
+    width: 2cm;
+    color: #FFDE58;
+    border-width: 5px;
+    border-style: solid;
+}
+
+.header {
     background-color: #19708B;
     color: white;
-    display: inline-block;
-    padding: 1.5cm;
-    max-width: 50%;
-    height: 100%;
-    float: inline-start;
+    padding: 2cm 1cm 0.5cm 1cm;
+    padding-top: 2cm;
 }
 
-.side .title {
-    margin-top: 12cm;
-    font-size: 1.2cm;
-}
-
-.side .name {
+.header .title {
     margin-top: 0.5cm;
-    font-size: 2cm;
-    line-height: 2cm;
+    font-size: 24px;
 }
 
-.content {
-    display: inline-block;
-    padding: 1.2cm;
-    max-width: 50%;
-    height: 100%;
-    float: inline-end;
-}
-
-.content .title {
-    margin-top: 2cm;
-    font-size: 1.2cm;
+.header #name {
+    font-size: 48px;
 }
 
 .result {
-    margin-top: 1.5cm;
+    padding: 2cm 0cm 0.5cm 1cm;
 }
 
-.result .label {
-    font-size: 0.5cm;
-    font-weight: bold;
+.result.strong {
+    page-break-after: always;
 }
 
-.result .explanation {
-    font-size: 0.36cm;
-    white-space: pre-line;
+.result .title {
+    font-size: 36px;
+    /*font-weight: 700;*/
+    color: #364D61;
+    margin-bottom: 0.5cm;
+}
+
+.items tr, .items td {
+    padding-top: 1.5cm;
+}
+
+.items td {
+    min-height: 100%;
+    width: 50%;
+    max-width: 50%;
+}
+
+.item {
+    padding-right: 1cm;
+    vertical-align: top;
+}
+
+.item .label {
+    margin-bottom: 0.5cm;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.item .explanation {
+    font-size: 16px;
     text-align: justify;
 }
+
 </style>
 <body>
-    <div class="page first-page">
-        <div class="side">
-            <div class="title">Hasil Light Assessment</div>
-            <div class="name">{{ strtoupper('Rezza Nafi Ismail') }}</div>
-        </div><div class="content">
-            <div class="section">
-                <div class="title">PERAN-PERAN KUAT</div>
-                <div class="result">
-                    <div class="label">ANALYST</div>
-                    <div class="explanation">
-                            Kamu menyukai aktivitas hitung-menghitung, aktivitas-aktivitas yang berhubungan dengan angka dan menganalisis data. Pemilik bakat ini biasanya suka terhadap angka dan data. Kamu kurang yakin akan sesuatu yang sifatnya intuitif tanpa berdasarkan data.
-
-                            Bakat ini termasuk ke dalam kelompok Cipta (Individual Cognitive) yang menggunakan otak kiri atas.
-                            
-                            Bakat ini dibutuhkan untuk peran-peran seperti akuntan, analyst, engineer, IT programmer, dan sebagainya.
-                    </div>
-                </div>
-            </div>
+    <div class="page">
+        <div class="header">
+            <hr class="intro-line"/>
+            <p class="title">Hasil Light Assessment</p>
+            <p id="name">{{ strtoupper($name) }}</p>
+        </div>
+        <div class="result strong">
+            <p class="title">PERAN-PERAN KUAT</p>
+            <hr class="intro-line" />
+            <table class="items">
+                <tbody>
+                    <tr>
+                        @foreach ($result['very_fit'] as $item)
+                            @component('result-item')
+                                @slot('result') {{ $item['result'] }} @endslot
+                                {{ $item['exp_pos'] }}
+                            @endcomponent
+                            @if ($loop->last)
+                                </tr>
+                            @elseif ($loop->even)
+                                </tr>
+                                <tr>
+                            @endif
+                        @endforeach
+                </tbody>
+            </table>
+        </div>
+        <div class="result weak">
+            <p class="title">PERAN-PERAN LEMAH</p>
+            <hr class="intro-line" />
+            <table class="items">
+                <tbody>
+                    <tr>
+                        @foreach ($result['very_not_fit'] as $item)
+                            @component('result-item')
+                                @slot('result') {{ $item['result'] }} @endslot
+                                {{ $item['exp_neg'] }}
+                            @endcomponent
+                            @if ($loop->last)
+                                </tr>
+                            @elseif ($loop->even)
+                                </tr>
+                                <tr>
+                            @endif
+                        @endforeach
+                </tbody>
+            </table>
         </div>
     </div>
 </body>

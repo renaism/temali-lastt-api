@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Option;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\PDF;
+use Error;
 
 class OptionController extends Controller
 {
@@ -25,11 +26,24 @@ class OptionController extends Controller
 
     public function getResultPDF(Request $request)
     {
-        //$result = $this->option->getResultPDF($request->selectedOptions);
+        $result = $this->option->getResult($request->selectedOptions);
         $pdf = app()->make('dompdf.wrapper');
-        $data = [];
-        $pdf->setPaper('A3', 'landscape');
-        $pdf->loadView('result', $data);
+        //$pdf->setPaper('A4', 'portrait');
+        $pdf->loadView('result', array('result' => $result, 'name' => $request->name));
+        return $pdf->download('result.pdf');
+    }
+
+    public function test()
+    {
+        $result = $this->option->getResultAllTest();
+        return view('result')->with('result', $result)->with('name', 'Sugeng Winterwood');
+    }
+
+    public function testPDF()
+    {
+        $result = $this->option->getResultAllTest();
+        $pdf = app()->make('dompdf.wrapper');
+        $pdf->loadView('result', array('result' => $result, 'name' => 'Sugeng Winterwood'));
         return $pdf->download('test.pdf');
     }
 }
